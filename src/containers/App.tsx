@@ -1,9 +1,11 @@
 import React, { useState }  from 'react';
 import './App.css';
-import Person from './Person/Person'
+import Person from '../components/Persons/Person/Person'
 import styled from 'styled-components'
 import styledComponentsTS from 'styled-components-ts'
-import styles from './Button.module.css'
+import styles from '../Button.module.css'
+import Persons from '../components/Persons/Persons';
+import Cockpit from '../components/Cockpit/Cockpit';
 
 // css modules is another way to appstyles at component level
 // const StyledButton = styledComponentsTS<Props>(styled.button)`
@@ -86,55 +88,18 @@ class App extends React.Component<Props, State> {
         let btnClass = [styles.Button];
 
         if (this.state.showPersons) {
-            persons = (<div> 
-                {this.state.persons.map((person, index) => {
-                    return <Person click={() => this.deletePersonHandler(index)} 
-                    name={person.name} age={person.age}
-                    key={person.id}
-                    change={(event: any) => this.nameChangedHandler(event, person.id)}></Person>
-                })}
-                {/* <Person 
-                    name={this.state.persons[0].name} 
-                    age={this.state.persons[0].age}/>
-                <Person 
-                    name={this.state.persons[1].name} 
-                    age={this.state.persons[1].age}
-                    click={this.switchNameHandler.bind(this, "Pete")}
-                    change={this.nameChangedHandler}>My Hobbies: cycling</Person>
-                <Person 
-                    name={this.state.persons[2].name} 
-                    age={this.state.persons[2].age}/> */}
-            </div>);
+            persons = <Persons persons={this.state.persons}
+                clicked={this.deletePersonHandler}
+                changed={this.nameChangedHandler}/>;
 
-            // style.backgroundColor = 'red';
             btnClass.push(styles.Red);
-        }
-
-        let classes :string[] = [];
-        if (this.state.persons.length <= 2) {
-            classes.push('red')
-        }
-        if (this.state.persons.length <= 1) {
-            classes.push('bold');
         }
 
         return (
                 <div className="App">
-                <h1>I'm a react developer</h1>
-                <p className={classes.join(' ')}>or am i</p>
-                {/* this is one way to pass argument to a method on a react class component */}
-                {/* <button onClick={this.switchNameHandler.bind(this, "Peter Pan")}>switch name</button> */}
-                {/* <button 
-                style={style}
-                onClick={() => this.switchNameHandler("Peter Pan")}>switch name</button> */}
-                
-                {/* styled component vs css modules */}
-                {/* <StyledButton alt={this.state.showPersons}
-                onClick={() => this.togglePersonHandler()}
-                >toggle name</StyledButton> */}
-                <button className={btnClass.join(' ')}
-                onClick={() => this.togglePersonHandler()}
-                >toggle name</button>
+                <Cockpit showPersons={this.state.showPersons} 
+                persons={this.state.persons}
+                clicked={this.togglePersonHandler} />
                 {persons}
             </div>
         );
