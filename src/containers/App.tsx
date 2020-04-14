@@ -23,6 +23,7 @@ import Cockpit from '../components/Cockpit/Cockpit';
 // `;
 
 interface Props {
+    appTitle: string;
     alt?: boolean;
 }
 
@@ -97,7 +98,9 @@ class App extends React.Component<Props, State> {
 
         return (
                 <div className="App">
-                <Cockpit showPersons={this.state.showPersons} 
+                <Cockpit 
+                title={this.props.appTitle}
+                showPersons={this.state.showPersons} 
                 persons={this.state.persons}
                 clicked={this.togglePersonHandler} />
                 {persons}

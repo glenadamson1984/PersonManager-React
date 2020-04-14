@@ -19,7 +19,7 @@ const Cockpit = (props: any) => {
 
     return (
         <div className='Cockpit'>
-        <h1>I'm a react developer</h1>
+        <h1>{props.title}</h1>
         <p className={classes.join(' ')}>or am i</p>
         <button className={btnClass.join(' ')}
         onClick={props.clicked}>toggle name</button>
