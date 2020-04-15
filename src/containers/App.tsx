@@ -1,4 +1,4 @@
-import React, { useState }  from 'react';
+import React, { useState, Component }  from 'react';
 import './App.css';
 import Person from '../components/Persons/Person/Person'
 import styled from 'styled-components'
@@ -29,7 +29,12 @@ interface Props {
 
 interface State {}
 
-class App extends React.Component<Props, State> {
+class App extends Component<Props, State> {
+    constructor(props: any) {
+        super(props);
+        console.log(`App.tsx - Constructor`);
+    }
+
     state = {
         persons: [    
         {id:'jshkjhsfj', name:"Glen", age:"35"},
@@ -39,6 +44,15 @@ class App extends React.Component<Props, State> {
         otherState: "some other value",
         showPersons: false
     };
+
+    static getDerivedStateFromProps(props: any,state: any) {
+        console.log(`App.tsx - getDerivedStateFromProps ${props}`);
+        return state;
+    }
+
+    componentDidMount() {
+        console.log(`app.tsx - componentDidMount`);
+    }
 
     switchNameHandler = (newName: string) => {
     console.log("was clicked from class component");
@@ -83,7 +97,7 @@ class App extends React.Component<Props, State> {
     }
 
     render() {
-
+        console.log(`App.tsx - render`);
         let persons = null;
 
         let btnClass = [styles.Button];

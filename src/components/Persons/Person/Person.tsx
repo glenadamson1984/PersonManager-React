@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Component} from 'react'
 import styled from 'styled-components'
 
 const StyledDiv = styled.div`
@@ -14,14 +14,25 @@ text-align: center;
         background-color: red;
 }`;
 
-const Person = (props: any) => {    
-    return (
-    <StyledDiv>
-        <p onClick={props.click}>im {props.name} and I am {props.age} years old</p>
-        <p>{props.children}</p>
-        <input type="text" onChange={props.change} value={props.name}/>
-    </StyledDiv>
-    );
+interface Props {
+    click?: any,
+    name: any,
+    age: any,
+    change?: any
+}
+
+interface State {}
+class Person extends Component<Props, State> {
+    render() {
+        console.log(`Person.tsx - rendering`);
+        return (
+        <StyledDiv>
+            <p onClick={this.props.click}>im {this.props.name} and I am {this.props.age} years old</p>
+            <p>{this.props.children}</p>
+            <input type="text" onChange={this.props.change} value={this.props.name}/>
+        </StyledDiv>
+        );
+    }
 }
 
 export default Person;
