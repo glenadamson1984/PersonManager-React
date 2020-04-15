@@ -54,6 +54,15 @@ class App extends Component<Props, State> {
         console.log(`app.tsx - componentDidMount`);
     }
 
+    shouldComponentUpdate(nextProps: any , nextState: any) {
+        console.log(`app.tsx - ssssshouldComponentUpdate`);
+        return true;
+    }
+
+    componentDidUpdate() {
+        console.log(`app.tsx - componentDidUpdate`);
+    }
+
     switchNameHandler = (newName: string) => {
     console.log("was clicked from class component");
     this.setState({
