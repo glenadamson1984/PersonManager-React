@@ -42,7 +42,8 @@ class App extends Component<Props, State> {
         {id:'awsdjsdj', name:"random", age:Math.floor(Math.random() * 30)}
         ],
         otherState: "some other value",
-        showPersons: false
+        showPersons: false,
+        showCockpit: true,
     };
 
     static getDerivedStateFromProps(props: any,state: any) {
@@ -121,11 +122,12 @@ class App extends Component<Props, State> {
 
         return (
                 <div className="App">
-                <Cockpit 
+                <button onClick={() => {this.setState({showCockpit: false})}}>Remove Cockpit</button>
+                {this.state.showCockpit ? <Cockpit 
                 title={this.props.appTitle}
                 showPersons={this.state.showPersons} 
                 persons={this.state.persons}
-                clicked={this.togglePersonHandler} />
+                clicked={this.togglePersonHandler} /> : null }
                 {persons}
             </div>
         );

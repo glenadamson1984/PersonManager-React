@@ -14,10 +14,23 @@ const Cockpit = (props: any) => {
     useEffect(() => {
         console.log(`Cockpit.tsk - useEffect`);
 
-        setTimeout(() => {
+        const timer = setTimeout(() => {
             alert("saved data to cloud");
         }, 1000);
+
+        return () => {
+            clearTimeout(timer);
+            console.log(`Cockpit.tsk - should do all cleanup work here`);
+        }
     }, []);
+
+    useEffect(() => {
+        console.log(`Cockpit.tsk - 2nd useEffect`);
+
+        return () => {
+            console.log(`Cockpit.tsk - 2nd should do all cleanup work here`);
+        }
+    });
 
     let classes :string[] = [];
     let btnClass = [styles.Button];
