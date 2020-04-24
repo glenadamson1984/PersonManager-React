@@ -7,6 +7,7 @@ import styles from '../Button.module.css'
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 import WithClass from '../hoc/WithClass'
+import AuthContext from '../context/auth-context'
 
 // css modules is another way to appstyles at component level
 // const StyledButton = styledComponentsTS<Props>(styled.button)`
@@ -45,6 +46,7 @@ class App extends Component<Props, State> {
         otherState: "some other value",
         showPersons: false,
         showCockpit: true,
+        authenticated: false,
     };
 
     static getDerivedStateFromProps(props: any,state: any) {
@@ -107,6 +109,10 @@ class App extends Component<Props, State> {
         this.setState({persons: persons});
     }
 
+    loginHandler = () => {
+        this.setState({authenticated: true});
+    }
+
     render() {
         console.log(`App.tsx - render`);
         let persons = null;
@@ -116,7 +122,8 @@ class App extends Component<Props, State> {
         if (this.state.showPersons) {
             persons = <Persons persons={this.state.persons}
                 clicked={this.deletePersonHandler}
-                changed={this.nameChangedHandler}/>;
+                changed={this.nameChangedHandler}
+                isAuthenticated={this.state.authenticated}/>;
 
             btnClass.push(styles.Red);
         }
@@ -124,12 +131,18 @@ class App extends Component<Props, State> {
         return (
                 <WithClass classes="App">
                 <button onClick={() => {this.setState({showCockpit: false})}}>Remove Cockpit</button>
+                <AuthContext.Provider value={{
+                        authenticated: this.state.authenticated, 
+                        login: this.loginHandler
+                    }}>
                 {this.state.showCockpit ? <Cockpit 
                 title={this.props.appTitle}
                 showPersons={this.state.showPersons} 
                 personsLength={this.state.persons.length}
-                clicked={this.togglePersonHandler} /> : null }
+                clicked={this.togglePersonHandler}
+                login={this.loginHandler} /> : null }
                 {persons}
+                </AuthContext.Provider>
             </WithClass>
         );
     }

@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
+import AuthContext from '../../../context/auth-context'
 
 const StyledDiv = styled.div`
 width: 60%;
@@ -18,7 +19,8 @@ interface Props {
     click?: any,
     name: any,
     age: any,
-    change?: any
+    change?: any,
+    isAuth?: any,
 }
 
 interface State {}
@@ -29,14 +31,20 @@ class Person extends Component<Props, State> {
         this.inputEleRef = React.createRef();
     }
     
+    static contextType = AuthContext;
+
     componentDidMount() {
         this.inputEleRef.current.focus();
+        console.log(this.context.authenticated);
     }
 
     render() {
         console.log(`Person.tsx - rendering`);
         return (
         <StyledDiv>
+                {this.context.authenticated ? 
+                <p>Authenticated!</p> : 
+                <p>please log in</p>}
             <p onClick={this.props.click}>im {this.props.name} and I am {this.props.age} years old</p>
             <p>{this.props.children}</p>
             <input

@@ -4,7 +4,8 @@ import Person from './Person/Person';
 interface Props {
     persons: any,
     clicked: any,
-    changed: any
+    changed: any,
+    isAuthenticated?: any,
 }
 
 interface State {}
@@ -49,7 +50,8 @@ class Persons extends PureComponent<Props, State> {
             return <Person click={() => this.props.clicked(index)} 
             name={person.name} age={person.age}
             key={person.id}
-            change={(event: any) => this.props.changed(event, person.id)}></Person>
+            change={(event: any) => this.props.changed(event, person.id)}
+            ></Person>
         });
     }
 }
