@@ -6,6 +6,7 @@ import styledComponentsTS from 'styled-components-ts'
 import styles from '../Button.module.css'
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
+import WithClass from '../hoc/WithClass'
 
 // css modules is another way to appstyles at component level
 // const StyledButton = styledComponentsTS<Props>(styled.button)`
@@ -121,15 +122,15 @@ class App extends Component<Props, State> {
         }
 
         return (
-                <div className="App">
+                <WithClass classes="App">
                 <button onClick={() => {this.setState({showCockpit: false})}}>Remove Cockpit</button>
                 {this.state.showCockpit ? <Cockpit 
                 title={this.props.appTitle}
                 showPersons={this.state.showPersons} 
-                persons={this.state.persons}
+                personsLength={this.state.persons.length}
                 clicked={this.togglePersonHandler} /> : null }
                 {persons}
-            </div>
+            </WithClass>
         );
     }
   }

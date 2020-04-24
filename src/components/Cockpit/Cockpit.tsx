@@ -1,8 +1,10 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useRef} from 'react'
 import styles from '../../Button.module.css'
 import './Cockpit.css';
 
 const Cockpit = (props: any) => {    
+    
+    const toggleButtonRef = useRef(document.createElement("button"));
     // useEffect(() => {
     //     console.log(`Cockpit.tsk - useEffect`);
 
@@ -14,12 +16,17 @@ const Cockpit = (props: any) => {
     useEffect(() => {
         console.log(`Cockpit.tsk - useEffect`);
 
-        const timer = setTimeout(() => {
-            alert("saved data to cloud");
-        }, 1000);
+        // const timer = setTimeout(() => {
+        //     alert("saved data to cloud");
+        // }, 1000);
+
+        if (toggleButtonRef !== null) {
+            toggleButtonRef.current.click();
+        }
+
 
         return () => {
-            clearTimeout(timer);
+            // clearTimeout(timer);
             console.log(`Cockpit.tsk - should do all cleanup work here`);
         }
     }, []);
@@ -39,10 +46,10 @@ const Cockpit = (props: any) => {
         btnClass.push(styles.Red);
     }
     
-    if (props.persons.length <= 2) {
+    if (props.personsLength <= 2) {
         classes.push('red')
     }
-    if (props.persons.length <= 1) {
+    if (props.personsLength <= 1) {
         classes.push('bold');
     }
 
@@ -50,10 +57,15 @@ const Cockpit = (props: any) => {
         <div className='Cockpit'>
         <h1>{props.title}</h1>
         <p className={classes.join(' ')}>or am i</p>
-        <button className={btnClass.join(' ')}
+        <button
+        ref={toggleButtonRef}
+        className={btnClass.join(' ')}
         onClick={props.clicked}>toggle name</button>
         </div>
     );
 }
 
-export default Cockpit;
+// functional components don't have a react hook for shouldComponentUpdate
+// but we can wrap the component with React.memo and if nothing changes in 
+// the component then it's not re-rendered
+export default React.memo(Cockpit);

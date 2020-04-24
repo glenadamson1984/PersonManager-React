@@ -23,13 +23,26 @@ interface Props {
 
 interface State {}
 class Person extends Component<Props, State> {
+    inputEleRef: any;
+    constructor(props: any) {
+        super(props);
+        this.inputEleRef = React.createRef();
+    }
+    
+    componentDidMount() {
+        this.inputEleRef.current.focus();
+    }
+
     render() {
         console.log(`Person.tsx - rendering`);
         return (
         <StyledDiv>
             <p onClick={this.props.click}>im {this.props.name} and I am {this.props.age} years old</p>
             <p>{this.props.children}</p>
-            <input type="text" onChange={this.props.change} value={this.props.name}/>
+            <input
+            key="i3"
+            ref={this.inputEleRef}
+            type="text" onChange={this.props.change} value={this.props.name}/>
         </StyledDiv>
         );
     }
